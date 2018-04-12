@@ -3,10 +3,13 @@
     "version": "1.0.0",
     "description": "Starter kit for React and Redux Pluralsight course by Cory House",
     "scripts": {
-      "prestart": "babel-node tools/startMessage.js",
-      "start": "babel-node tools/srcServer.js",
-      "lint" : "node_modules/.bin/esw webpack.config.* src tools",
-      "lint:watch" : "npm run lint -- --watch"
+        "prestart": "babel-node tools/startMessage.js",
+        "start": "npm-run-all --parallel open:source lint:watch test:watch",
+        "open:source": "babel-node tools/srcServer.js",
+        "lint": "node_modules/.bin/esw webpack.config.* src tools",
+        "lint:watch": "npm run lint -- --watch",
+        "test": "mocha --reporter progress tools/testSetup.js \"src/**/*.test.js\"",
+        "test:watch": "npm run test -- --watch"
     },
     "author": "Cory House",
     "license": "MIT",
@@ -50,6 +53,7 @@
         "jsdom": "8.5.0",
         "mocha": "2.4.5",
         "nock": "8.0.0",
+        "npm": "3.10.10",
         "npm-run-all": "1.8.0",
         "open": "0.0.5",
         "react-addons-test-utils": "15.0.2",
