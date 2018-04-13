@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 //import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import * as courseActions from '../../actions/courseActions';
 
 class CoursesPage extends Component {
   constructor(props, context) {
@@ -20,13 +22,18 @@ class CoursesPage extends Component {
   }
 
   onClickSave() {
-    alert(`Saving ${this.state.course.title}`);
+    this.props.dispatch(courseActions.createCourse(this.state.course));
+  }
+
+  courseRow(course, index) {
+    return <div key={index}>{course.title}</div>;
   }
 
   render() {
     return (
       <div>
         <h1>Courses</h1>
+        {this.props.courses.map(this.courseRow)}
         <h2>Add course</h2>
         <input type="text"
           onChange={this.onTitleChange}
@@ -42,7 +49,16 @@ class CoursesPage extends Component {
 }
 
 CoursesPage.propTypes = {
-
+  dispatch: PropTypes.func.isRequired,
+  courses: PropTypes.array.isRequired
 };
 
-export default CoursesPage;
+function mapStateToProps(state, ownProps) {
+  return {
+    courses: state.courses // from alias in reducer
+  };
+}
+
+// const connectedStateAndProps = connect(mapStateToProps, mapDispatchToProps);
+// export default connectedStateAndProps(CoursesPage);
+export default connect(mapStateToProps)(CoursesPage); // gets dispatch automatically
