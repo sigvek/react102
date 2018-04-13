@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 //import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import * as courseActions from '../../actions/courseActions';
 
 class CoursesPage extends Component {
@@ -11,6 +12,7 @@ class CoursesPage extends Component {
       course: { title: ""}
     };
 
+    // Needed to access the correct 'this'
     this.onTitleChange = this.onTitleChange.bind(this);
     this.onClickSave = this.onClickSave.bind(this);
   }
@@ -22,7 +24,7 @@ class CoursesPage extends Component {
   }
 
   onClickSave() {
-    this.props.dispatch(courseActions.createCourse(this.state.course));
+    this.props.actions.createCourse(this.state.course);
   }
 
   courseRow(course, index) {
@@ -49,8 +51,8 @@ class CoursesPage extends Component {
 }
 
 CoursesPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  courses: PropTypes.array.isRequired
+  courses: PropTypes.array.isRequired,
+  actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
@@ -59,6 +61,13 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    // createCourse: course => dispatch(courseActions.createCourse(course))
+    actions: bindActionCreators(courseActions, dispatch)
+  };
+}
+
 // const connectedStateAndProps = connect(mapStateToProps, mapDispatchToProps);
 // export default connectedStateAndProps(CoursesPage);
-export default connect(mapStateToProps)(CoursesPage); // gets dispatch automatically
+export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage); // gets dispatch automatically
