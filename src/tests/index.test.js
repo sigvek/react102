@@ -1,7 +1,7 @@
-import expect from 'expect';
+// import expect from 'expect';
 
-describe('My first test', () => {
-  it('should pass', () => {
-    expect(true).toEqual(true);
-  });
-});
+// describe('My first test', () => {
+//   it('should pass', () => {
+//     expect(true).toEqual(true);
+//   });
+// });
