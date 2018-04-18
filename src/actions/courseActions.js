@@ -14,6 +14,10 @@ export function deleteCourseSuccess(course) {
   return { type: types.DELETE_COURSE_SUCCESS, course};
 }
 
+export function deleteCourseBegin(course) {
+  return { type: types.BEGIN_DELETE_COURSE, course};
+}
+
 export function createCourseSuccess(course) {
   return { type: types.CREATE_COURSE_SUCCESS, course};
 }
@@ -45,6 +49,7 @@ export function saveCourse(course) {
 export function deleteCourse(course) {
   return function(dispatch, getState) {
     dispatch(beginAjaxCall());
+    dispatch(deleteCourseBegin(course));
     return courseApi.deleteCourse(course.id).then(() => {
       dispatch(deleteCourseSuccess(course));
     }).catch(error => {

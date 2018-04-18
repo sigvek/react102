@@ -11,7 +11,7 @@ const CourseListRow = ({course, onDelete}) => {
       <td>{course.authorId}</td>
       <td>{course.category}</td>
       <td>{course.length}</td>
-      <td><DeleteButton onDelete={onDelete} deleting={false} /></td>
+      <td><DeleteButton onDelete={onDelete} deleting={course.isDeleting || false} /></td>
     </tr>
   );
 };
