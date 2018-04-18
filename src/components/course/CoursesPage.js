@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as courseActions from '../../actions/courseActions';
+import toastr from 'toastr';
 import CourseList from './CourseList';
 import { browserHistory } from 'react-router';
 
@@ -18,7 +19,13 @@ class CoursesPage extends Component {
   }
 
   deleteCourse(course) {
-    this.props.actions.deleteCourse(course);
+    this.props.actions.deleteCourse(course)
+      .then(() => {
+        toastr.success('Deleted course: ' + course.title);
+      })
+      .catch(error => {
+        toastr.error(error);
+      });
   }
 
   redirectToAddCoursePage() {
@@ -39,7 +46,7 @@ class CoursesPage extends Component {
           value="Add course"
           className="btn btn-primary"
           onClick={this.redirectToAddCoursePage} />
-        <CourseList courses={courses} onDelete={this.deleteCourse} />
+        {courses.length > 0 && <CourseList courses={courses} onDelete={this.deleteCourse} />}
       </div>
     );
   }
