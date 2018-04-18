@@ -5,8 +5,8 @@ Following a [course on Pluralsight](https://app.pluralsight.com/library/courses/
 ## Challenges
 - Add admin UI for authors
   - Don't allow deletion of authors that have a registered course
-- Delete course
-- Hide course list if empty
+- ~~Delete course~~
+- ~~Hide course list if empty~~
 - Warn user if there are unsaved changes, and they try to leave the form
 - Client side form validation on category and length
 - Handle 404s
