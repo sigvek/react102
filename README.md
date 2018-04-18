@@ -11,7 +11,7 @@ Following a [course on Pluralsight](https://app.pluralsight.com/library/courses/
 - Client side form validation on category and length
 - Handle 404s
   - Tip: manage mapStateToProps
-- Show number of courses in the Header
+- ~~Show number of courses in the Header~~
 - Pagination or infinite scrolling to support large data sets
 - Sort the courses table (alphabetic by title)
   - Tip: mapStateToProps
