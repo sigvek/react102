@@ -2,11 +2,8 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import DeleteButton from '../common/DeleteButton';
 
-const deleteCourse = () => {
-  alert('Heeey');
-};
+const CourseListRow = ({course, onDelete}) => {
 
-const CourseListRow = ({course}) => {
   return (
     <tr>
       <td><a href={course.watchHref} target="_blank">Watch</a></td>
@@ -14,13 +11,14 @@ const CourseListRow = ({course}) => {
       <td>{course.authorId}</td>
       <td>{course.category}</td>
       <td>{course.length}</td>
-      <td><DeleteButton onClick={deleteCourse} /></td>
+      <td><DeleteButton onDelete={onDelete} deleting={false} /></td>
     </tr>
   );
 };
 
 CourseListRow.propTypes = {
-  course: PropTypes.object.isRequired
+  course: PropTypes.object.isRequired,
+  onDelete: PropTypes.func.isRequired
 };
 
 export default CourseListRow;

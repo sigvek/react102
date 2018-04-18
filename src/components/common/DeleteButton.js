@@ -1,17 +1,18 @@
 import React, { PropTypes } from 'react';
 
-const DeleteButton = ({onClick}) => {
+const DeleteButton = ({onDelete, deleting}) => {
   return (
       <button
         className={'btn btn-outline-danger'}
-        onClick={onClick} >
-        <i className={'fa fa-trash'}></i>
+        onClick={onDelete} >
+        <i className={deleting ? 'fa fa-spinner fa-spin' : 'fa fa-trash'}></i>
       </button>
   );
 };
 
 DeleteButton.propTypes = {
-  onClick: PropTypes.func.isRequired
+  onDelete: PropTypes.func.isRequired,
+  deleting: PropTypes.bool.isRequired
 };
 
 export default DeleteButton;

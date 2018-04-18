@@ -13,15 +13,21 @@ class CoursesPage extends Component {
     this.state = {
       course: { title: "" }
     };
+
+    this.deleteCourse = this.deleteCourse.bind(this);
+  }
+
+  deleteCourse(course) {
+    this.props.actions.deleteCourse(course);
   }
 
   redirectToAddCoursePage() {
     browserHistory.push('/course');
   }
 
-  courseRow(course, index) {
-    return <div key={index}>{course.title}</div>;
-  }
+  // courseRow(course, index) {
+  //   return <div key={index}>{course.title}</div>;
+  // }
 
   render() {
     const { courses } = this.props;
@@ -33,7 +39,7 @@ class CoursesPage extends Component {
           value="Add course"
           className="btn btn-primary"
           onClick={this.redirectToAddCoursePage} />
-        <CourseList courses={courses} />
+        <CourseList courses={courses} onDelete={this.deleteCourse} />
       </div>
     );
   }
