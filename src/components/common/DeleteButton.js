@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 const DeleteButton = ({onClick}) => {
   return (
       <button
-        className={'btn btn-sm btn-danger'}
+        className={'btn btn-outline-danger'}
         onClick={onClick} >
         <i className={'fa fa-trash'}></i>
       </button>
