@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as courseActions from '../../actions/courseActions';
+import * as sortingActions from '../../actions/sortingActions';
 import toastr from 'toastr';
 import CourseList from './CourseList';
 import { browserHistory } from 'react-router';
@@ -16,6 +17,7 @@ class CoursesPage extends Component {
     };
 
     this.deleteCourse = this.deleteCourse.bind(this);
+    this.setSorting = this.setSorting.bind(this);
   }
 
   deleteCourse(course) {
@@ -32,6 +34,10 @@ class CoursesPage extends Component {
     browserHistory.push('/course');
   }
 
+  setSorting(event) {
+    this.props.sorting.setSorting("category");
+  }
+
   // courseRow(course, index) {
   //   return <div key={index}>{course.title}</div>;
   // }
@@ -46,6 +52,11 @@ class CoursesPage extends Component {
           value="Add course"
           className="btn btn-primary"
           onClick={this.redirectToAddCoursePage} />
+        <button
+          className="btn btn-primary"
+          onClick={this.setSorting} >
+          Set sorting to x
+        </button>
         {courses.length > 0 && <CourseList courses={courses} onDelete={this.deleteCourse} />}
       </div>
     );
@@ -54,19 +65,23 @@ class CoursesPage extends Component {
 
 CoursesPage.propTypes = {
   courses: PropTypes.array.isRequired,
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  sorting: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
   return {
-    courses: state.courses // from alias in reducer
+    courses: state.courses.sort((a, b) => {
+      return a.title > b.title;
+    }) // from alias in reducer
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     // createCourse: course => dispatch(courseActions.createCourse(course))
-    actions: bindActionCreators(courseActions, dispatch)
+    actions: bindActionCreators(courseActions, dispatch),
+    sorting: bindActionCreators(sortingActions, dispatch)
   };
 }
 
