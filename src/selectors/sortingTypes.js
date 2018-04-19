@@ -1,0 +1,2 @@
+export const SORT_BY_TITLE = 'SORT_BY_TITLE';
+export const SORT_BY_CATEGORY = 'SORT_BY_CATEGORY';

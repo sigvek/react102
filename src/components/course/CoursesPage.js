@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as courseActions from '../../actions/courseActions';
 import * as sortingActions from '../../actions/sortingActions';
+import * as sortingType from '../../selectors/sortingTypes';
+import { sortfunctionsByType } from '../../selectors/selectors';
 import toastr from 'toastr';
 import CourseList from './CourseList';
 import { browserHistory } from 'react-router';
@@ -17,7 +19,8 @@ class CoursesPage extends Component {
     };
 
     this.deleteCourse = this.deleteCourse.bind(this);
-    this.setSorting = this.setSorting.bind(this);
+    this.setSortingTitle = this.setSortingTitle.bind(this);
+    this.setSortingCategory = this.setSortingCategory.bind(this);
   }
 
   deleteCourse(course) {
@@ -34,8 +37,14 @@ class CoursesPage extends Component {
     browserHistory.push('/course');
   }
 
-  setSorting(event) {
-    this.props.sorting.setSorting("category");
+  setSortingCategory(event) {
+    //this.props.sorting.setSorting(sortingType.SORT_BY_CATEGORY);
+    this.props.actions.sortCourses(sortingType.SORT_BY_CATEGORY);
+  }
+
+  setSortingTitle(event) {
+    //this.props.sorting.setSorting(sortingType.SORT_BY_TITLE);
+    this.props.actions.sortCourses(sortingType.SORT_BY_TITLE);
   }
 
   // courseRow(course, index) {
@@ -43,7 +52,7 @@ class CoursesPage extends Component {
   // }
 
   render() {
-    const { courses } = this.props;
+    const { courses, coursesSorting } = this.props;
 
     return (
       <div>
@@ -54,10 +63,15 @@ class CoursesPage extends Component {
           onClick={this.redirectToAddCoursePage} />
         <button
           className="btn btn-primary"
-          onClick={this.setSorting} >
-          Set sorting to x
+          onClick={this.setSortingTitle} >
+          Set sorting to Title
         </button>
-        {courses.length > 0 && <CourseList courses={courses} onDelete={this.deleteCourse} />}
+        <button
+          className="btn btn-primary"
+          onClick={this.setSortingCategory} >
+          Set sorting to Category
+        </button>
+        {courses.length > 0 && <CourseList courses={courses} onDelete={this.deleteCourse} payAttention={coursesSorting}/>}
       </div>
     );
   }
@@ -66,14 +80,13 @@ class CoursesPage extends Component {
 CoursesPage.propTypes = {
   courses: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
-  sorting: PropTypes.object.isRequired
+  sorting: PropTypes.object.isRequired,
+  coursesSorting: PropTypes.string
 };
 
 function mapStateToProps(state, ownProps) {
   return {
-    courses: state.courses.sort((a, b) => {
-      return a.title > b.title;
-    }) // from alias in reducer
+    courses: state.courses
   };
 }
 

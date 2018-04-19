@@ -6,6 +6,10 @@ export function loadCoursesSuccess(courses) {
   return { type: types.LOAD_COURSES_SUCCESS, courses};
 }
 
+export function sortCoursesSuccess(sorting) {
+  return { type: types.SORT_COURSES, sorting};
+}
+
 export function updateCourseSuccess(course) {
   return { type: types.UPDATE_COURSE_SUCCESS, course};
 }
@@ -20,6 +24,12 @@ export function deleteCourseBegin(course) {
 
 export function createCourseSuccess(course) {
   return { type: types.CREATE_COURSE_SUCCESS, course};
+}
+
+export function sortCourses(sorting) {
+  return function(dispatch, getState) {
+    dispatch(sortCoursesSuccess(sorting));
+  };
 }
 
 export function loadCourses() {
