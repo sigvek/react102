@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-//import PropTypes from 'prop-types';
 import Header from './common/Header';
 
 class App extends Component {
