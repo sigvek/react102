@@ -3,9 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as courseActions from '../../actions/courseActions';
-import * as sortingActions from '../../actions/sortingActions';
 import * as sortingType from '../../selectors/sortingTypes';
-import { sortfunctionsByType } from '../../selectors/selectors';
 import toastr from 'toastr';
 import CourseList from './CourseList';
 import { browserHistory } from 'react-router';
@@ -38,12 +36,10 @@ class CoursesPage extends Component {
   }
 
   setSortingCategory(event) {
-    //this.props.sorting.setSorting(sortingType.SORT_BY_CATEGORY);
     this.props.actions.sortCourses(sortingType.SORT_BY_CATEGORY);
   }
 
   setSortingTitle(event) {
-    //this.props.sorting.setSorting(sortingType.SORT_BY_TITLE);
     this.props.actions.sortCourses(sortingType.SORT_BY_TITLE);
   }
 
@@ -52,7 +48,7 @@ class CoursesPage extends Component {
   // }
 
   render() {
-    const { courses, coursesSorting } = this.props;
+    const { courses } = this.props;
 
     return (
       <div>
@@ -71,7 +67,7 @@ class CoursesPage extends Component {
           onClick={this.setSortingCategory} >
           Set sorting to Category
         </button>
-        {courses.length > 0 && <CourseList courses={courses} onDelete={this.deleteCourse} payAttention={coursesSorting}/>}
+        {courses.length > 0 && <CourseList courses={courses} onDelete={this.deleteCourse} />}
       </div>
     );
   }
@@ -79,9 +75,7 @@ class CoursesPage extends Component {
 
 CoursesPage.propTypes = {
   courses: PropTypes.array.isRequired,
-  actions: PropTypes.object.isRequired,
-  sorting: PropTypes.object.isRequired,
-  coursesSorting: PropTypes.string
+  actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
@@ -93,8 +87,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
   return {
     // createCourse: course => dispatch(courseActions.createCourse(course))
-    actions: bindActionCreators(courseActions, dispatch),
-    sorting: bindActionCreators(sortingActions, dispatch)
+    actions: bindActionCreators(courseActions, dispatch)
   };
 }
 
